@@ -1,0 +1,24 @@
+service: PruebaMutantes
+
+plugins:
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  profile: deploy-aws
+  region: us-east-1
+
+functions:
+  mutante:
+    handler: ./handlers/mutante.mutante
+    events:
+      - http:
+          path: mutant
+          method: post
+  stats:
+    handler: ./handlers/statsMutante.statsMutante
+    events:
+      - http:
+          path: stats
+          method: get
