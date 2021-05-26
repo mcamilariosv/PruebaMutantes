@@ -1,0 +1,73 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "prueba-mutantes-api-stats",
+        "description": "Recursos que se exponen para administrar las estadisticas de los registros almacenados luego de procesar una solicitud para si una cadena de ADN pertene a un mutante o no.",
+        "contact": {
+            "email": "mcamilariosv@gmail.com"
+        },
+        "license": {
+            "name": "UNLICENSED"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [{
+            "url": "http://localhost:3000/dev",
+            "description": "local"
+        },
+        {
+            "url": "https://0z5y9yc9wk.execute-api.us-east-1.amazonaws.com/dev",
+            "description": "dev"
+        }
+    ],
+    "paths": {
+        "/stats": {
+            "get": {
+                "tags": [
+                    "stats"
+                ],
+                "summary": "estadisticas",
+                "operationId": "estadisticas",
+                "description": "En este metodo se podran observar estadisticas generales de las cadenas de ADN procesadas, de tal modo que agrupa cuantas cadenas han sido de mutantes (count_mutant_dna), cuantos de humanos (count_human_dna) y la proporcion de estos dos valores (ratio).",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/dna"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "La petición estaba bien formada pero no se pudo seguir debido a errores de semántica."
+                    }
+                }
+            }
+        }
+
+    },
+    "components": {
+        "schemas": {
+            "dna": {
+                "type": "object",
+                "properties": {
+                    "count_mutant_dna": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "count_human_dna": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "ratio": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,89 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "prueba-mutantes-api-mutant",
+        "description": "Recursos que se exponen para determinar si una cadena de ADN es valida para un mutante o no.",
+        "contact": {
+            "email": "mcamilariosv@gmail.com"
+        },
+        "license": {
+            "name": "UNLICENSED"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [{
+            "url": "http://localhost:3000/dev",
+            "description": "local"
+        },
+        {
+            "url": "https://0z5y9yc9wk.execute-api.us-east-1.amazonaws.com/dev",
+            "description": "dev"
+        }
+    ],
+    "paths": {
+        "/mutant": {
+            "post": {
+                "tags": [
+                    "mutantes"
+                ],
+                "summary": "validar-cadena-adn",
+                "operationId": "validar-cadena-adn",
+                "description": "Este metodo se encarga de procesar una solicitud y determinar si una cadena de ADN ingresada puede ser apta para un mutante o no. Este valida inicialmente que el array ingresado en el request cumpla con las caracteristicas para convertirse en una matriz cuadratica, si no es asi obtendra un codigo de estado 400 y un mensaje descrito en el apartado para las respuestas. si cumple la anterior validacion, entonces validara que las letras ingresadas pertenezcan al grupo de letras permitidas para evaluar una cadena de ADN, si no es ai, obtendra un codigo de estado 406 y un mensaje descrito en el apartado de respuestas. Esta API, deja un registro en base de datos con la cadena de ADN ingresada y si fue mutante o no. esta base de datos es en mongo y esta alojada en mongo atlas.",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/body_dna"
+                },
+                "responses": {
+                    "200": {
+                        "description": "ADN valido para un mutante."
+                    },
+                    "400": {
+                        "description": "Debes proporcionar una cadena de ADN valida."
+                    },
+                    "403": {
+                        "description": "ADN NO valido para un mutante."
+                    },
+                    "406": {
+                        "description": "El array NO contiene los valores permitidos para la cadena de ADN."
+                    },
+                    "422": {
+                        "description": "La petición estaba bien formada pero no se pudo seguir debido a errores de semántica."
+                    }
+                }
+            }
+        }
+
+    },
+    "components": {
+        "schemas": {
+            "dna": {
+                "type": "object",
+                "properties": {
+                    "dna": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+
+                }
+
+            }
+        },
+        "requestBodies": {
+            "body_dna": {
+                "description": "body de la peticion.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/dna"
+                            }
+                        }
+                    }
+                },
+                "required": true
+            }
+        }
+    }
+}
