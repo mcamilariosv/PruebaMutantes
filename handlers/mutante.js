@@ -36,12 +36,12 @@ module.exports.mutante = async(event) => {
                     if (_respuesta) {
                         return {
                             statusCode: _auxiliar.ok,
-                            body: _auxiliar.mensajeOk,
+                            body: JSON.stringify(true)
                         }
                     } else {
                         return {
                             statusCode: _auxiliar.forbidden,
-                            body: _auxiliar.mensajeForbidden,
+                            body: JSON.stringify(false)
                         }
                     }
 

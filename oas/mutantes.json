@@ -34,13 +34,13 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "ADN valido para un mutante."
+                        "description": "true"
                     },
                     "400": {
                         "description": "Debes proporcionar una cadena de ADN valida."
                     },
                     "403": {
-                        "description": "ADN NO valido para un mutante."
+                        "description": "false."
                     },
                     "406": {
                         "description": "El array NO contiene los valores permitidos para la cadena de ADN."
